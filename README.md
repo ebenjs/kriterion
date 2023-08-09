@@ -2,9 +2,9 @@
 
 ---
 
-[![npm](https://img.shields.io/npm/v/kriterion.svg)](https://www.npmjs.com/package/kriterion)
-[![npm](https://img.shields.io/npm/dm/kriterion.svg)](https://www.npmjs.com/package/kriterion)
-[![npm](https://img.shields.io/npm/l/kriterion.svg)](https://www.npmjs.com/package/kriterion)
+[![npm](https://img.shields.io/npm/v/kriterion.svg)](https://www.npmjs.com/package/@ebenjs/kriterion)
+[![npm](https://img.shields.io/npm/dm/kriterion.svg)](https://www.npmjs.com/package/@ebenjs/kriterion)
+[![npm](https://img.shields.io/npm/l/kriterion.svg)](https://www.npmjs.com/package/@ebenjs/kriterion)
 
 ---
 
@@ -60,7 +60,7 @@ Now you can use Kriterion in your Vue.js components:
         numberType="int">
         
         <template v-slot:error>Custom error message</template>
-        
+
       </k-input>
     </k-validator>
   </div>
