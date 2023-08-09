@@ -1,0 +1,68 @@
+{
+  "name": "@ebenjs/kriterion",
+  "description": "Effortless validation library for Vue.js applications, ensuring accurate user data.",
+  "license": "GNU General Public License v3.0",
+  "keywords": [
+    "Vue.js",
+    "validation",
+    "form validation",
+    "data validation",
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/kriterion.git"
+  },
+  "author": "Your Name",
+  "bugs": {
+    "url": "https://github.com/yourusername/kriterion/issues"
+  },
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "private": false,
+  "main": "./dist/kriterion.umd.js",
+  "module": "./dist/kriterion.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/kriterion.es.js",
+      "require": "./dist/kriterion.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build-r": "rollup -c",
+    "preview": "vite preview",
+    "test:unit": "vitest",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "vue": "^3.2.47",
+    "vuex": "^4.0.2"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.0.0",
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/test-utils": "^2.3.0",
+    "eslint": "^8.34.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "jsdom": "^21.1.0",
+    "prettier": "^2.8.4",
+    "rollup": "^3.26.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-vue": "^6.0.0",
+    "vite": "^4.1.4",
+    "vitest": "^0.29.1"
+  }
+}

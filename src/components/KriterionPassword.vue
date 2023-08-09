@@ -1,0 +1,90 @@
+<script setup>
+import KriterionInput from "@/components/KriterionInput.vue";
+import {uniqIdentifier} from "@/helpers/utility.js";
+
+const props = defineProps({
+    placeholder: {
+        type: Object,
+    },
+    hasNumerical: {
+        type: Boolean,
+        default: true
+    },
+    hasLowerCase: {
+        type: Boolean,
+        default: true
+    },
+    hasUpperCase: {
+        type: Boolean,
+        default: true
+    },
+    hasSpecialChar: {
+        type: Boolean,
+        default: true
+    },
+    minLength: {
+        type: Number,
+        default: 8
+    },
+    inputStyles: {
+        type: String,
+        default: ''
+    }
+})
+
+</script>
+
+<template>
+    <div>
+        <!--        Repeated type or not -->
+        <!--        One object props instead of multiple hasproperties -->
+
+        <KriterionInput
+                validationType="password"
+                :hasLowerCase="props.hasLowerCase"
+                :hasUpperCase="props.hasUpperCase"
+                :hasNumber="props.hasNumber"
+                :hasSpecialChar="props.hasSpecialChar"
+                :placeholder="props.placeholder.first"
+                :style="props.inputStyles"
+                :identifier="'password.first'"
+                :kid="uniqIdentifier()"
+        >
+
+            <template v-slot:error>
+                <slot name="first-custom-error"></slot>
+            </template>
+
+        </KriterionInput>
+
+
+        <slot name="between-content"></slot>
+
+
+        <KriterionInput
+                validationType="password"
+                :hasLowerCase="props.hasLowerCase"
+                :hasUpperCase="props.hasUpperCase"
+                :hasNumber="props.hasNumber"
+                :hasSpecialChar="props.hasSpecialChar"
+                :placeholder="props.placeholder.second"
+                :style="props.inputStyles"
+                :identifier="'password.second'"
+                :kid="uniqIdentifier()"
+        >
+
+            <!--            Activate errors or not-->
+            <template v-slot:error>
+                <slot name="first-custom-error"></slot>
+            </template>
+
+        </KriterionInput>
+
+
+        <slot name="after-content"></slot>
+    </div>
+</template>
+
+<style scoped>
+
+</style>
