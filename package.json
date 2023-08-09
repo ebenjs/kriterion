@@ -11,11 +11,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/kriterion.git"
+    "url": "https://github.com/ebenjs/kriterion.git"
   },
   "author": "Your Name",
   "bugs": {
-    "url": "https://github.com/yourusername/kriterion/issues"
+    "url": "https://github.com/ebenjs/kriterion/issues"
   },
   "version": "0.0.1",
   "type": "module",
@@ -35,7 +35,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build-r": "rollup -c",
     "preview": "vite preview",
     "test:unit": "vitest",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",

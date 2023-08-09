@@ -1,41 +1,70 @@
-# kriterion
+# Kriterion
 
-This template should help get you started developing with Vue 3 in Vite.
+---
 
-## Recommended IDE Setup
+[![npm](https://img.shields.io/npm/v/kriterion.svg)](https://www.npmjs.com/package/kriterion)
+[![npm](https://img.shields.io/npm/dm/kriterion.svg)](https://www.npmjs.com/package/kriterion)
+[![npm](https://img.shields.io/npm/l/kriterion.svg)](https://www.npmjs.com/package/kriterion)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+---
 
-## Customize configuration
+Kriterion is a powerful validation library designed specifically for developers using Vue.js. Simplify the user data validation process with this elegant and flexible solution. Whether you're building complex forms or interactive user interfaces, Kriterion lets you ensure that user-entered data meets required criteria before it's processed.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Main Features
+- **Seamless Integration:** Easily integrate Kriterion into your existing Vue.js projects, enjoying seamless integration with components and templates.
 
-## Project Setup
 
-```sh
-npm install
+- **Custom Validation:** Create custom validation rules for your form fields, based on your specific needs. Define criteria such as length, format, minimum/maximum values, etc.
+
+
+- **Vue.js responsiveness:** Leverage the native responsiveness of Vue.js to instantly display validation error messages to users, improving user experience.
+
+
+- **Real-Time Validation:** Take advantage of real-time validation to give users instant feedback as they fill out forms, reducing errors and incorrect submissions.
+
+
+- **Advanced Error Handling:** Elegantly handle validation error messages by customizing them to your UI needs. Display clear and understandable messages to guide users.
+
+## Installation
+Install Kriterion using npm:
+```bash
+npm install @ebenjs/kriterion
 ```
 
-### Compile and Hot-Reload for Development
+## Usage
+Import Kriterion into your Vue.js project in your main.js file:
+```javascript
+import Kriterion from '@ebenjs/kriterion'
+```
+Then register it as a Vue.js plugin:
+```javascript
+import Kriterion from "@ebenjs/kriterion";
 
-```sh
-npm run dev
+const app = createApp(App);
+
+app.use(Kriterion);
+
+app.mount('#app')
 ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
+Now you can use Kriterion in your Vue.js components:
+```html
+<template>
+  <div>
+    <k-validator :activate-errors="true">
+      <k-input
+        placeholder="Validate Number"
+        validationType="number"
+        :min="5"
+        :max="8"
+        numberType="int">
+        
+        <template v-slot:error>Custom error message</template>
+        
+      </k-input>
+    </k-validator>
+  </div>
+</template>
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
 
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
