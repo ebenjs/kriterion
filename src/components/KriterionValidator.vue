@@ -23,7 +23,7 @@ const props = defineProps({
     }
 })
 
-watch(errors.value, async (newError, oldError) => {
+watch(errors.value, async (newError) => {
     emit('error', newError)
 })
 
@@ -46,5 +46,3 @@ watch(errors.value, async (newError, oldError) => {
     </div>
 </template>
 
-<style scoped>
-</style>

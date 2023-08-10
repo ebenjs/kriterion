@@ -1,7 +1,7 @@
 <script setup>
-import {computed, onMounted, ref} from "vue";
-import {addError, errors, removeError} from "@/shared-state/errors.js";
-import {passwordValues} from "@/shared-state/password.js";
+import { computed, onMounted, ref } from "vue";
+import { addError, errors, removeError } from "@/shared-state/errors.js";
+import { passwordValues } from "@/shared-state/password.js";
 import {
   isBothPasswordValid,
   isEmailValid,
@@ -11,10 +11,11 @@ import {
   validateNumber as numberValidator,
   validatePhoneNumber as phoneNumberValidator
 } from "@/helpers/validator.js";
-import {kriterionProps} from "@/helpers/props.js";
-import {uniqIdentifier} from "@/helpers/utility.js";
+import { kriterionProps } from "@/helpers/props.js";
+import { uniqIdentifier } from "@/helpers/utility.js";
 
 const props = defineProps(kriterionProps)
+const emit = defineEmits(['error'])
 
 const kid = ref(uniqIdentifier())
 const inputValue = ref('')
@@ -33,7 +34,7 @@ const validateNumber = (fieldLabel) => {
   returnCheckResponse(checkResult)
 }
 
-const validateAlphaNum = ({numerical = true, field}) => {
+const validateAlphaNum = ({ numerical = true, field }) => {
   const checkResult = alphabetValidator({
     value: inputValue.value,
     minLength: props.minLength,
@@ -60,12 +61,18 @@ const validatePhoneNumber = (fieldLabel) => {
 }
 
 const validateEmail = (fieldLabel) => {
-  const checkResult = isEmailValid({email: inputValue.value, field: fieldLabel})
+  const checkResult = isEmailValid({ email: inputValue.value, field: fieldLabel })
   returnCheckResponse(checkResult)
 }
 
 const validatePassword = (identifier, fieldLabel) => {
-  identifier === 'password.first' ? passwordValues.first = inputValue.value : passwordValues.second = inputValue.value
+
+  if (identifier === 'password.first') {
+    passwordValues.first = inputValue.value
+  } else {
+    passwordValues.second = inputValue.value
+  }
+
   const checkPasswordValidityResult = isPasswordValid({
     password: inputValue.value,
     hasLowerCase: props.hasLowerCase,
@@ -74,6 +81,7 @@ const validatePassword = (identifier, fieldLabel) => {
     hasSpecialChar: props.hasSpecialChar,
     field: fieldLabel
   })
+
   returnCheckResponse(checkPasswordValidityResult)
 
   if (identifier === 'password.second') {
@@ -84,13 +92,13 @@ const validatePassword = (identifier, fieldLabel) => {
 
 const validateRequired = () => {
   const checkResult = isFilled(inputValue.value, currentFieldLabel.value)
-  console.log('checkResult', checkResult)
   returnCheckResponse(checkResult)
 }
 
 const returnCheckResponse = (checkResult) => {
   if (!checkResult.isValid) {
     addError(checkResult.message, props.kid ?? kid.value)
+    emit('error', checkResult.message)
   } else {
     removeError(props.kid ?? kid.value)
   }
@@ -107,10 +115,10 @@ const validate = () => {
       validateNumber(currentFieldLabel.value)
       break
     case 'alpha':
-      validateAlphaNum({numerical: false, field: currentFieldLabel.value})
+      validateAlphaNum({ numerical: false, field: currentFieldLabel.value })
       break
     case 'alphanum':
-      validateAlphaNum({numerical: true, field: currentFieldLabel.value})
+      validateAlphaNum({ numerical: true, field: currentFieldLabel.value })
       break
     case 'phone':
       validatePhoneNumber(currentFieldLabel.value)
@@ -173,29 +181,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <input
-      :id="props.id"
-      :kid="props.kid ?? kid"
-      type="text"
-      :title="props.hasTitle ? currentFieldLabel : null"
-      v-model="inputValue"
-      :placeholder="props.placeholder"
-      :readonly="props.readonly"
-      :disabled="props.disabled"
-      :autofocus="props.autofocus"
-      :autocomplete="props.autocomplete"
-      :style="props.style"
-      :class="props.class"
-      @blur="validate()">
+  <input :id="props.id" :kid="props.kid ?? kid" type="text" :title="props.hasTitle ? currentFieldLabel : null"
+    v-model="inputValue" :placeholder="props.placeholder" :readonly="props.readonly" :disabled="props.disabled"
+    :autofocus="props.autofocus" :autocomplete="props.autocomplete" :style="props.style" :class="props.class"
+    @blur="validate()" />
 
-  <slot v-if="errors.has(props.kid ?? kid)" name="error">
+  <slot v-if="errors.has(props.kid ?? kid)">
     <div>
-      {{ errors.get(props.kid ?? kid) }}
+      <small>
+        {{ errors.get(props.kid ?? kid) }}
+      </small>
     </div>
   </slot>
-
 </template>
-
-<style scoped>
-
-</style>
