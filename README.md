@@ -1,3 +1,5 @@
+<img src="./public/assets/../Kriterion.png" width="200" height="200" />
+
 # Kriterion
 
 ---
