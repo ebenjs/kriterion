@@ -3,11 +3,16 @@ import KriterionInput from "@/components/KriterionInput.vue";
 import KriterionPassword from "@/components/KriterionPassword.vue";
 import KriterionValidator from "@/components/KriterionValidator.vue";
 
+const captureError = (error) => {
+  console.log('error captured', error);
+}
+
 </script>
 
 <template>
   <KriterionValidator
-      :activate-errors="true">
+      :activate-errors="true"
+      @error="captureError">
     <KriterionInput
         placeholder="Validate Required Field"
         :label="'reqfield'"

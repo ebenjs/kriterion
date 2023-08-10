@@ -119,7 +119,6 @@ const validate = () => {
       validateEmail(currentFieldLabel.value)
       break
     case 'password':
-      // validateAlphaNum({numerical: true})
       validatePassword(props.identifier, currentFieldLabel.value)
       break
     default:
