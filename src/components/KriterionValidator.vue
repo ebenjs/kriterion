@@ -1,7 +1,9 @@
 <script setup>
 
 import { errors } from '@/shared-state/errors.js';
+import { watch } from 'vue'
 
+const emit = defineEmits(['error'])
 
 const props = defineProps({
     activateErrors: {
@@ -19,6 +21,10 @@ const props = defineProps({
         type: String,
         default: ''
     }
+})
+
+watch(errors.value, async (newError) => {
+    emit('error', newError)
 })
 
 </script>
@@ -40,5 +46,3 @@ const props = defineProps({
     </div>
 </template>
 
-<style scoped>
-</style>

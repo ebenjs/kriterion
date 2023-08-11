@@ -20,6 +20,11 @@ export default defineConfig({
       }
     }
   },
+  test: {
+    coverage: {
+      reporter: ['text', 'html']
+    }
+  },
   plugins: [vue()],
   resolve: {
     alias: {
