@@ -68,5 +68,6 @@ Now you can use Kriterion in your Vue.js components:
   </div>
 </template>
 ```
+## Getting started
 
 
