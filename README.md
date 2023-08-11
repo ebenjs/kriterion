@@ -70,4 +70,12 @@ Now you can use Kriterion in your Vue.js components:
 ```
 ## Getting started
 
+### Components
+
+- `k-validator` : An optional component that wraps the other two components. Aggregates validation results from child components.
+  
+- `k-input` : The main component to which the props we add to it will constitute the validation criteria.
+
+- `k-password` : A component encompassing two k-input components with a predisposition to passwords.
+
 
