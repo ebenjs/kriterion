@@ -16,7 +16,7 @@ export const isFilled = (value, field) => {
 }
 
 // Numerical
-export const validateNumber = ({number, type = 'int', min = 0, max, hasNegativeValues = true, required = true, field }) => {
+export const validateNumber = ({number, type = 'int', min = Number.NEGATIVE_INFINITY, max, hasNegativeValues = true, required = true, field }) => {
 
     if (required) {
         if (!isFilled(number, field).isValid) {
@@ -54,6 +54,11 @@ export const validateNumber = ({number, type = 'int', min = 0, max, hasNegativeV
                     message: 'Please enter a float for field ' + field,
                 };
             }
+        }else{
+            return {
+                isValid: false,
+                message: 'Unknown type for field ' + field,
+            };
         }
 
         const floatNumber = parseFloat(number);
@@ -154,6 +159,13 @@ export const validatePhoneNumber = ({phoneNumber, digitsNumber = 8, hasPlusSign 
         return {
             isValid: false,
             message: 'Please enter a valid phone number with a + sign',
+        };
+    }
+
+    if (!hasPlusSign && regex.phoneWithPlusSignRegex.test(phoneNumber)) {
+        return {
+            isValid: false,
+            message: 'Please enter a valid phone number without a + sign',
         };
     }
 
@@ -265,8 +277,4 @@ export const isPasswordValid = ({
     };
 };
 
-/* TODO
-*   Credit Card validation
-*   Url validation
-*   Domain validation */
 
