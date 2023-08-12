@@ -41,6 +41,7 @@ const props = defineProps({
 
         <KriterionInput
                 validationType="password"
+                :minLength="props.minLength"
                 :hasLowerCase="props.hasLowerCase"
                 :hasUpperCase="props.hasUpperCase"
                 :hasNumber="props.hasNumber"

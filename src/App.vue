@@ -57,7 +57,7 @@ const showError = (error) => {
 
     <br /><br />
     <KriterionPassword :hasNumerical="true" :hasLowerCase="true" :hasUpperCase="true" :hasSpecialChar="false"
-      :minLength="8" :inputStyles="'background-color: gray; color: white'"
+      :minLength="10"
       :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }">
 
       <template v-slot:first-custom-error>
