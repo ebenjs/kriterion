@@ -80,7 +80,7 @@ Now you can use Kriterion in your Vue.js components:
 
 ### Validation types
 
-Depending on your needs, you can define the type of validation you wish to apply to a k-input field by specifying the validationType prop.
+Depending on your needs, you can define the type of validation you wish to apply to a `k-input` field by specifying the validationType prop.
 
 The following types of validation are possible: 
 
@@ -216,3 +216,8 @@ Here's a very simple example of how to use the k-password component for a 12-cha
 Here is the simplistic rendering result
 
 <img src="./public/assets/screenshot-k-password.png" />
+
+You will notice that we have specified the placeholder prop for the k-password component. This allowed us to define the placeholders of our child components.
+Note that everything is customisable in kriterion. From custom css classes and styles for our fields to catching errors and displaying them.
+
+## Customization
