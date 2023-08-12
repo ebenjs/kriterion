@@ -16,7 +16,7 @@ export const isFilled = (value, field) => {
 }
 
 // Numerical
-export const validateNumber = ({number, type = 'int', min = Number.NEGATIVE_INFINITY, max, hasNegativeValues = true, required = true, field }) => {
+export const validateNumber = ({ number, type = 'int', min = Number.NEGATIVE_INFINITY, max, hasNegativeValues = true, required = true, field }) => {
 
     if (required) {
         if (!isFilled(number, field).isValid) {
@@ -54,7 +54,7 @@ export const validateNumber = ({number, type = 'int', min = Number.NEGATIVE_INFI
                     message: 'Please enter a float for field ' + field,
                 };
             }
-        }else{
+        } else {
             return {
                 isValid: false,
                 message: 'Unknown type for field ' + field,
@@ -85,7 +85,7 @@ export const validateNumber = ({number, type = 'int', min = Number.NEGATIVE_INFI
 };
 
 // Alphabetical
-export const validateAlphabet = ({value, minLength = 1, maxLength, required = true, hasSpace = false, hasNumerical = false, field}) => {
+export const validateAlphabet = ({ value, minLength = 1, maxLength, required = true, hasSpace = false, hasNumerical = false, field }) => {
 
     if (required) {
         if (!isFilled(value, field).isValid) {
@@ -142,7 +142,7 @@ export const validateAlphabet = ({value, minLength = 1, maxLength, required = tr
 }
 
 // Phone number
-export const validatePhoneNumber = ({phoneNumber, digitsNumber = 8, hasPlusSign = true, required = true, field}) => {
+export const validatePhoneNumber = ({ phoneNumber, digitsNumber = 8, hasPlusSign = true, required = true, field }) => {
 
     const checkResult = validateNumber({
         number: phoneNumber,
@@ -183,7 +183,7 @@ export const validatePhoneNumber = ({phoneNumber, digitsNumber = 8, hasPlusSign 
 };
 
 // Email validation
-export const isEmailValid = ({email, required = true, field}) => {
+export const isEmailValid = ({ email, required = true, field }) => {
     if (required) {
         if (!isFilled(email, field).isValid) {
             return isFilled(email, field);
@@ -222,19 +222,18 @@ export const isBothPasswordValid = (password, confirmPassword) => {
 };
 
 export const isPasswordValid = ({
-                                    password,
-                                    hasLowerCase = true,
-                                    hasUpperCase = true,
-                                    hasNumber = true,
-                                    hasSpecialChar = true,
-                                    field
-                                }) => {
+    password,
+    hasLowerCase = true,
+    hasUpperCase = true,
+    hasNumber = true,
+    hasSpecialChar = true,
+    minLength = 8,
+    field
+}) => {
 
     if (!isFilled(password, field).isValid) {
         return isFilled(password, field);
     }
-
-    const minLength = 8;
 
     if (password.length < minLength) {
         return {
