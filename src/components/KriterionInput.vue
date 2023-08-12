@@ -79,6 +79,7 @@ const validatePassword = (identifier, fieldLabel) => {
     hasUpperCase: props.hasUpperCase,
     hasNumber: props.hasNumber,
     hasSpecialChar: props.hasSpecialChar,
+    minLength: props.minLength,
     field: fieldLabel
   })
 

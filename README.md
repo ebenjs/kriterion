@@ -1,4 +1,4 @@
-<img src="./public/assets/../Kriterion.png" width="200" height="200" />
+<img src="./public/Kriterion.png" width="200" height="200" />
 
 # Kriterion
 
@@ -152,3 +152,67 @@ Here's an example of how we can define a field that accepts alphanumeric values 
 ```
 
 #### Phone number validation
+
+To validate a phone number field, we need to set the validationType prop to `phone`. Then we have the choice of the following props to further our validation criterion :
+
+- `digits`: Number of digits for telephone numbers.
+  
+- `hasPlusSign`: Indicates whether the phone number should begin with a plus sign. Useful if you need to specify area codes.
+
+Here is an example of a field that accepts a 12-digit phone number,  including the area code (+ sign needed).
+
+```javascript
+<k-input
+  placeholder="PhoneNumber criteria"
+  validationType="phone"
+  :hasPlusSign="true"
+  :digits="12">
+</k-input>
+```
+
+#### Email validation
+
+Mail validation is as simple as setting the validationType prop to email
+
+```javascript
+<k-input
+  placeholder="Email criteria"
+  validationType="email">
+</k-input>
+```
+
+#### Password validation
+
+The `k-password` component makes it very easy to validate passwords. This component generates two `k-input` elements for the password and confirmation fields. However, you can skip this component and just use a k-input with the necessary props to achieve the same result. The k-password component is still intended to make your life easier.
+
+The following props can be used to define a validation criterion for a password field:
+
+- `minlength`: The minimum length of the password. The default is 8 characters.
+  
+- `hasLowerCase`: Should the password contain lowercase letters?
+  
+- `hasUpperCase`: Does the password have to contain capital letters?
+
+- `hasNumber`: Does the password have to contain numbers?
+  
+- `hasSpecialChar`: Does the password have to contain special characters?
+
+Here's a very simple example of how to use the k-password component for a 12-character password that must contain lowercase letters, uppercase letters and numbers.
+
+```javascript
+<k-password
+  :hasNumerical="true"
+  :hasLowerCase="true"
+  :hasUpperCase="true"
+  :hasSpecialChar="false"
+  :minLength="12"
+  :placeholder="{
+    first: 'First Placeholder',
+    second: 'Second Placeholder'
+  }">
+
+</k-password>
+```
+Here is the simplistic rendering result
+
+<img src="./public/assets/screenshot-k-password.png" />
