@@ -19,7 +19,13 @@ const showError = (error) => {
     <KriterionInput placeholder="Email criteria" validationType="email"
       style="border: solid 1px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px">
     </KriterionInput>
-    
+
+    <br /><br />
+
+    <KriterionInput validationType="email" class="custom-input-style" placeholder="Custom error message">
+      <!-- We add a slot -->
+      <div class="error">Email validation failed</div>
+    </KriterionInput>
     <br /><br />
 
     <KriterionInput placeholder="Validate Required Field" :label="'reqfield'" isRequired @error="showError">
@@ -63,9 +69,8 @@ const showError = (error) => {
 
 
     <br /><br />
-    <KriterionPassword
-    class="custom-input-style" :hasNumerical="true" :hasLowerCase="true" :hasUpperCase="true" :hasSpecialChar="false"
-      :minLength="10" :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }">
+    <KriterionPassword class="custom-input-style" :hasNumerical="true" :hasLowerCase="true" :hasUpperCase="true"
+      :hasSpecialChar="false" :minLength="10" :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }">
 
       <template v-slot:first-custom-error>
         <div>Custom error for first input</div>
@@ -77,13 +82,19 @@ const showError = (error) => {
 
 <style>
 .custom-input-style {
-  border: solid 1px rgba(0,0,0,0.1);
+  border: solid 1px rgba(0, 0, 0, 0.1);
   padding: 10px;
   border-radius: 5px;
 }
 
-.custom-input-style:not(:first-child) {
+/* .custom-input-style:not(:first-child) {
   margin-left: 10px;
+} */
+
+.error {
+  color: red;
+  margin-top: 10px;
+  font-family: 'Courier New', Courier, monospace;
 }
 </style>
 

@@ -82,7 +82,7 @@ const props = defineProps({
 
             <!--            Activate errors or not-->
             <template v-slot:error>
-                <slot name="first-custom-error"></slot>
+                <slot name="second-custom-error"></slot>
             </template>
 
         </KriterionInput>

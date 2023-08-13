@@ -276,3 +276,41 @@ Here is the rendering result
 
 <img src="./public/assets/screenshot-customization-2.png" />
 
+### Errors slots
+
+By default, error messages are displayed directly at the bottom of each form field. But we can change how we want to display these error messages by using the `slots` provided.
+
+Here is for example how an error is displayed by default for an invalid email type field:
+
+<img src="./public/assets/screenshot-customization-3.png" />
+
+For `k-input` components, we just need to fill in the default slot if you want to display errors differently.
+
+For example:
+
+```html
+<k-input
+  placeholder="Custom error message"
+  class="custom-input-style"
+  validationType="email">
+  <!-- We add a slot -->
+  <div class="error">Email validation failed</div>
+</k-input>
+
+<style scoped>
+.error{
+  color: red;
+  margin-top: 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+</style>
+
+```
+
+And the result looks like this when there is a validation error:
+
+<img src="./public/assets/screenshot-customization-4.png" />
+
+For `k-password` type components, error messages are displayed mainly next to the first password field. The only situation in which a message is displayed next to the second password field is when the two passwords do not match.
+
+However, two slots are available: `first-custom-error` and `second-custom-error`. You are free to customise the messages if you wish.
