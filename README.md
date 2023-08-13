@@ -80,7 +80,7 @@ Now you can use Kriterion in your Vue.js components:
 
 ### Validation types
 
-Depending on your needs, you can define the type of validation you wish to apply to a k-input field by specifying the validationType prop.
+Depending on your needs, you can define the type of validation you wish to apply to a `k-input` field by specifying the validationType prop.
 
 The following types of validation are possible: 
 
@@ -216,3 +216,101 @@ Here's a very simple example of how to use the k-password component for a 12-cha
 Here is the simplistic rendering result
 
 <img src="./public/assets/screenshot-k-password.png" />
+
+You will notice that we have specified the placeholder prop for the k-password component. This allowed us to define the placeholders of our child components.
+Note that everything is customisable in kriterion. From custom css classes and styles for our fields to catching errors and displaying them.
+
+## Customization
+
+### Styles
+
+The `k-input` and `k-password` components can be customized using css styles. We can use the `class` prop to pass them css classes or the `style` prop to apply css properties directly to them.
+
+As an example, here is how we can apply css properties to a `k-input` component :
+
+```javascript
+<k-input
+  placeholder="Email criteria"
+  validationType="email"
+  style="border: solid 1px rgba(0,0,0,0.1);
+    padding: 10px;
+    border-radius: 5px">
+</k-input>
+```
+
+Here is the rendering result
+
+<img src="./public/assets/screenshot-customization-1.png" />
+
+And here is an example of how we can apply css classes to a `k-password` component :
+
+```javascript
+<k-password
+  class='custom-input-style'
+  :hasNumerical="true"
+  :hasLowerCase="true"
+  :hasUpperCase="true"
+  :hasSpecialChar="true"
+  :placeholder="{ 
+    first: 'First Placeholder',
+    second: 'Second Placeholder' 
+    }"
+  >
+</k-password>
+
+<style>
+.custom-input-style {
+  border: solid 1px rgba(0,0,0,0.1);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.custom-input-style:not(:first-child) {
+  margin-left: 10px;
+}
+</style>
+
+```
+
+Here is the rendering result
+
+<img src="./public/assets/screenshot-customization-2.png" />
+
+### Errors slots
+
+By default, error messages are displayed directly at the bottom of each form field. But we can change how we want to display these error messages by using the `slots` provided.
+
+Here is for example how an error is displayed by default for an invalid email type field:
+
+<img src="./public/assets/screenshot-customization-3.png" />
+
+For `k-input` components, we just need to fill in the default slot if you want to display errors differently.
+
+For example:
+
+```html
+<k-input
+  placeholder="Custom error message"
+  class="custom-input-style"
+  validationType="email">
+  <!-- We add a slot -->
+  <div class="error">Email validation failed</div>
+</k-input>
+
+<style scoped>
+.error{
+  color: red;
+  margin-top: 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+</style>
+
+```
+
+And the result looks like this when there is a validation error:
+
+<img src="./public/assets/screenshot-customization-4.png" />
+
+For `k-password` type components, error messages are displayed mainly next to the first password field. The only situation in which a message is displayed next to the second password field is when the two passwords do not match.
+
+However, two slots are available: `first-custom-error` and `second-custom-error`. You are free to customise the messages if you wish.

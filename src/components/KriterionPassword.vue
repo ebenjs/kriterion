@@ -26,7 +26,11 @@ const props = defineProps({
         type: Number,
         default: 8
     },
-    inputStyles: {
+    style: {
+        type: String,
+        default: ''
+    },
+    class: {
         type: String,
         default: ''
     }
@@ -47,7 +51,8 @@ const props = defineProps({
                 :hasNumber="props.hasNumber"
                 :hasSpecialChar="props.hasSpecialChar"
                 :placeholder="props.placeholder.first"
-                :style="props.inputStyles"
+                :style="props.style"
+                :class="props.class"
                 :identifier="'password.first'"
                 :kid="uniqIdentifier()"
         >
@@ -69,14 +74,15 @@ const props = defineProps({
                 :hasNumber="props.hasNumber"
                 :hasSpecialChar="props.hasSpecialChar"
                 :placeholder="props.placeholder.second"
-                :style="props.inputStyles"
+                :style="props.style"
+                :class="props.class"
                 :identifier="'password.second'"
                 :kid="uniqIdentifier()"
         >
 
             <!--            Activate errors or not-->
             <template v-slot:error>
-                <slot name="first-custom-error"></slot>
+                <slot name="second-custom-error"></slot>
             </template>
 
         </KriterionInput>
