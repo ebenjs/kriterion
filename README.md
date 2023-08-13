@@ -221,3 +221,58 @@ You will notice that we have specified the placeholder prop for the k-password c
 Note that everything is customisable in kriterion. From custom css classes and styles for our fields to catching errors and displaying them.
 
 ## Customization
+
+### Styles
+
+The `k-input` and `k-password` components can be customized using css styles. We can use the `class` prop to pass them css classes or the `style` prop to apply css properties directly to them.
+
+As an example, here is how we can apply css properties to a `k-input` component :
+
+```javascript
+<k-input
+  placeholder="Email criteria"
+  validationType="email"
+  style="border: solid 1px rgba(0,0,0,0.1);
+    padding: 10px;
+    border-radius: 5px">
+</k-input>
+```
+
+Here is the rendering result
+
+<img src="./public/assets/screenshot-customization-1.png" />
+
+And here is an example of how we can apply css classes to a `k-password` component :
+
+```javascript
+<k-password
+  class='custom-input-style'
+  :hasNumerical="true"
+  :hasLowerCase="true"
+  :hasUpperCase="true"
+  :hasSpecialChar="true"
+  :placeholder="{ 
+    first: 'First Placeholder',
+    second: 'Second Placeholder' 
+    }"
+  >
+</k-password>
+
+<style>
+.custom-input-style {
+  border: solid 1px rgba(0,0,0,0.1);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.custom-input-style:not(:first-child) {
+  margin-left: 10px;
+}
+</style>
+
+```
+
+Here is the rendering result
+
+<img src="./public/assets/screenshot-customization-2.png" />
+
