@@ -76,7 +76,7 @@ const showError = (error) => {
         class="custom-input-style" />
     </div>
 
-
+    <!-- Slots have priority over errorClass and errorStyle properties. -->
     <div class="block">
       <KriterionPassword class="custom-input-style" errorClass="error" :hasNumerical="true" :hasLowerCase="true"
         :hasUpperCase="true" :hasSpecialChar="false" :minLength="10"
