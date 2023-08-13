@@ -101,13 +101,13 @@ To make a field required, you need to add the `isRequired` prop.
 
 For numeric types, we have a few props that enable us to refine the validation criteria. They are as follows
 
-- `min`: Minimum value for numeric types.
+- `min`: (*number*) Minimum value for numeric types.
   
-- `max`: Maximum value for numeric types.
+- `max`: (*number*) Maximum value for numeric types.
 
-- `numberType`: Number type (int, float) for numeric types.
+- `numberType`: (*choice : string*) Number type (`['int', 'float']`) for numeric types.
   
-- `hasNegativeValues`: If this prop is set, the field accepts negative numbers.
+- `hasNegativeValues`: (*boolean*) If this prop is set, the field accepts negative numbers.
 
 Here's how we can add a numeric field that accepts floating numbers and has a minimum value of -20.0 and a maximum value of 100.0
 
@@ -128,15 +128,15 @@ As you can see, all validation criteria are defined using props.
 
 The following props are used to define validation criteria for alphabetical fields.
 
-- `validationType`: *alpha* or *alphanum*
+- `validationType`: (*choice : string*) `['alpha','alphanum']`
   
-- `minLength`: Minimum length for alpha and alphanum types.
+- `minLength`: (*number*) Minimum length for alpha and alphanum types.
   
-- `maxLength`: Maximum length for alpha and alphanum types.
+- `maxLength`: (*number*) Maximum length for alpha and alphanum types.
 
-- `hasSpace`: If this prop is set, it allows spaces.
+- `hasSpace`: (*boolean*) If this prop is set, it allows spaces.
   
-- `hasNumerical`: If this prop is set, it allows numerical values. Even if the field had been defined for alpha validation, it will now support alphanumeric validation.
+- `hasNumerical`: (*boolean*) If this prop is set, it allows numerical values. Even if the field had been defined for alpha validation, it will now support alphanumeric validation.
 
 Here's an example of how we can define a field that accepts alphanumeric values without spaces:
 
@@ -155,9 +155,9 @@ Here's an example of how we can define a field that accepts alphanumeric values 
 
 To validate a phone number field, we need to set the validationType prop to `phone`. Then we have the choice of the following props to further our validation criterion :
 
-- `digits`: Number of digits for telephone numbers.
+- `digits`: (*number*) Number of digits for telephone numbers.
   
-- `hasPlusSign`: Indicates whether the phone number should begin with a plus sign. Useful if you need to specify area codes.
+- `hasPlusSign`: (*boolean*) Indicates whether the phone number should begin with a plus sign. Useful if you need to specify area codes.
 
 Here is an example of a field that accepts a 12-digit phone number,  including the area code (+ sign needed).
 
@@ -187,15 +187,15 @@ The `k-password` component makes it very easy to validate passwords. This compon
 
 The following props can be used to define a validation criterion for a password field:
 
-- `minlength`: The minimum length of the password. The default is 8 characters.
+- `minlength`: (*number*) The minimum length of the password. The default is 8 characters.
   
-- `hasLowerCase`: Should the password contain lowercase letters?
+- `hasLowerCase`: (*boolean*) Should the password contain lowercase letters?
   
-- `hasUpperCase`: Does the password have to contain capital letters?
+- `hasUpperCase`: (*boolean*) Does the password have to contain capital letters?
 
-- `hasNumber`: Does the password have to contain numbers?
+- `hasNumber`: (*boolean*) Does the password have to contain numbers?
   
-- `hasSpecialChar`: Does the password have to contain special characters?
+- `hasSpecialChar`: (*boolean*) Does the password have to contain special characters?
 
 Here's a very simple example of how to use the k-password component for a 12-character password that must contain lowercase letters, uppercase letters and numbers.
 
@@ -314,3 +314,5 @@ And the result looks like this when there is a validation error:
 For `k-password` type components, error messages are displayed mainly next to the first password field. The only situation in which a message is displayed next to the second password field is when the two passwords do not match.
 
 However, two slots are available: `first-custom-error` and `second-custom-error`. You are free to customise the messages if you wish.
+
+### Capturing errors events
