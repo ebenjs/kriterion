@@ -188,7 +188,7 @@ onMounted(() => {
     @blur="validate()" />
 
   <slot v-if="errors.has(props.kid ?? kid)">
-    <div>
+    <div :class="props.errorClass" :style="props.errorStyle">
       <small>
         {{ errors.get(props.kid ?? kid) }}
       </small>
