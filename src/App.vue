@@ -19,6 +19,14 @@ const showError = (error) => {
 
     <div class="block">
       <div>
+        <label>Alphabetical validation with minLength and maxLength and space authorized properties</label>
+      </div>
+      <KriterionInput placeholder="Alphabetic Values" validationType="alpha" :hasSpace="true" :minLength="1"
+        :maxLength="5" :isRequired="false" class="custom-input-style" />
+    </div>
+
+    <div class="block">
+      <div>
         <label>Email validation with default values</label>
       </div>
       <KriterionInput placeholder="Email" validationType="email" class="custom-input-style">
