@@ -17,7 +17,10 @@ const showError = (error) => {
   <KriterionValidator :activate-errors="true" @error="captureError">
 
     <KriterionInput placeholder="Email criteria" validationType="email"
-      style="border: solid 1px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px">
+      style="border: solid 1px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px"
+      
+      errorStyle="color: red; margin-top: 10px; font-family: 'Courier New', Courier, monospace"
+      @error="showError">
     </KriterionInput>
 
     <br /><br />
@@ -29,7 +32,7 @@ const showError = (error) => {
     <br /><br />
 
     <KriterionInput placeholder="Validate Required Field" :label="'reqfield'" isRequired @error="showError">
-      <div @error="showError">Error captured</div>
+      <div>Error captured</div>
     </KriterionInput>
 
     <br /><br />
@@ -69,7 +72,9 @@ const showError = (error) => {
 
 
     <br /><br />
-    <KriterionPassword class="custom-input-style" :hasNumerical="true" :hasLowerCase="true" :hasUpperCase="true"
+    <KriterionPassword class="custom-input-style" 
+    errorClass="error"
+    :hasNumerical="true" :hasLowerCase="true" :hasUpperCase="true"
       :hasSpecialChar="false" :minLength="10" :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }">
 
       <template v-slot:first-custom-error>

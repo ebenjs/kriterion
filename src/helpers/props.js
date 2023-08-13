@@ -98,7 +98,15 @@ export const kriterionProps = {
         type: String,
         default: ''
     },
+    errorClass: {
+        type: String,
+        default: ''
+    },
     style: {
+        type: String,
+        default: ''
+    },
+    errorStyle: {
         type: String,
         default: ''
     },

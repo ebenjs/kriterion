@@ -315,4 +315,7 @@ For `k-password` type components, error messages are displayed mainly next to th
 
 However, two slots are available: `first-custom-error` and `second-custom-error`. You are free to customise the messages if you wish.
 
+> It is also possible, if you prefer, to modify only the style of the error messages by specifying the `errorStyle` and `errorClass` props. This is useful if you don't want to provide a full slot.
+>
+
 ### Capturing errors events

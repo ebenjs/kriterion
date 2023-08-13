@@ -30,7 +30,15 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    errorStyle: {
+        type: String,
+        default: ''
+    },
     class: {
+        type: String,
+        default: ''
+    },
+    errorClass: {
         type: String,
         default: ''
     }
@@ -53,6 +61,8 @@ const props = defineProps({
                 :placeholder="props.placeholder.first"
                 :style="props.style"
                 :class="props.class"
+                :errorStyle="props.errorStyle"
+                :errorClass="props.errorClass"
                 :identifier="'password.first'"
                 :kid="uniqIdentifier()"
         >
@@ -76,6 +86,8 @@ const props = defineProps({
                 :placeholder="props.placeholder.second"
                 :style="props.style"
                 :class="props.class"
+                :errorStyle="props.errorStyle"
+                :errorClass="props.errorClass"
                 :identifier="'password.second'"
                 :kid="uniqIdentifier()"
         >
