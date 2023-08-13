@@ -14,92 +14,110 @@ const showError = (error) => {
 </script>
 
 <template>
+  <h1>Kriterion validation demo</h1>
   <KriterionValidator :activate-errors="true" @error="captureError">
 
-    <KriterionInput placeholder="Email criteria" validationType="email"
-      style="border: solid 1px rgba(0,0,0,0.1); padding: 10px; border-radius: 5px"
-      
-      errorStyle="color: red; margin-top: 10px; font-family: 'Courier New', Courier, monospace"
-      @error="showError">
-    </KriterionInput>
+    <div class="block">
+      <div>
+        <label>Email validation with default values</label>
+      </div>
+      <KriterionInput placeholder="Email" validationType="email" class="custom-input-style">
+      </KriterionInput>
+    </div>
 
-    <br /><br />
+    <div class="block">
+      <div>
+        <label>Email validation with custom error slot</label>
+      </div>
+      <KriterionInput validationType="email" class="custom-input-style" placeholder="Custom error message">
+        <div class="error">Email validation failed</div>
+      </KriterionInput>
+    </div>
 
-    <KriterionInput validationType="email" class="custom-input-style" placeholder="Custom error message">
-      <!-- We add a slot -->
-      <div class="error">Email validation failed</div>
-    </KriterionInput>
-    <br /><br />
+    <div class="block">
+      <div>
+        <label>Simple required field validation with custom error style</label>
+      </div>
+      <KriterionInput placeholder="Required Field" class="custom-input-style"
+        errorStyle="color: red; margin-top: 10px; font-family: 'Courier New', Courier, monospace" isRequired />
+    </div>
 
-    <KriterionInput placeholder="Validate Required Field" :label="'reqfield'" isRequired @error="showError">
-      <div>Error captured</div>
-    </KriterionInput>
+    <div class="block">
+      <div>
+        <label>Validating a number with min and max properties</label>
+      </div>
+      <!--     Define priority of validation min and hasNegativeValues for instance -->
+      <KriterionInput placeholder="Number" validationType="number" :min="1" :max="10" numberType="int" :isRequired="true"
+        class="custom-input-style" />
+    </div>
 
-    <br /><br />
-
-    <!--     Define priority of validation min and hasNegativeValues for instance -->
-    <KriterionInput placeholder="Validate Number" validationType="number" :min="5" :max="8" numberType="int"
-      :hasNegativeValues="true" :isRequired="true">
-    </KriterionInput>
-
-    <br /><br />
-
-    <KriterionInput placeholder="Validate Alphabetic Values" validationType="alpha" :hasSpace="true" :minLength="1"
-      :maxLength="5" isRequired>
-    </KriterionInput>
-
-    <br /><br />
-
-    <KriterionInput placeholder="Validate Alphabetic Values" validationType="alpha" :hasSpace="true" :minLength="2"
-      :maxLength="10" isRequired>
-    </KriterionInput>
-
-    <br /><br />
-
-    <KriterionInput placeholder="Validate AlphaNum Values" validationType="alphanum" :hasSpace="true" :minLength="2"
-      :maxLength="10" isRequired>
-    </KriterionInput>
-
-    <br /><br />
-
-    <KriterionInput placeholder="Validate PhoneNumber" validationType="phone" :hasPlusSign="false" :digits="0" isRequired>
-    </KriterionInput>
-
-    <br /><br />
-
-    <KriterionInput placeholder="Validate Email" validationType="email" isRequired>
-    </KriterionInput>
+    <div class="block">
+      <div>
+        <label>Alphabetical validation with minLength and maxLength and space authorized properties</label>
+      </div>
+      <KriterionInput placeholder="Alphabetic Values" validationType="alpha" :hasSpace="true" :minLength="1"
+        :maxLength="5" isRequired class="custom-input-style" />
+    </div>
 
 
-    <br /><br />
-    <KriterionPassword class="custom-input-style" 
-    errorClass="error"
-    :hasNumerical="true" :hasLowerCase="true" :hasUpperCase="true"
-      :hasSpecialChar="false" :minLength="10" :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }">
+    <div class="block">
+      <div>
+        <label>Alphanumerical validation with minLength and maxLength and no space authorized properties</label>
+      </div>
+      <KriterionInput placeholder="AlphaNum Values" validationType="alphanum" :hasSpace="false" :minLength="2"
+        :maxLength="10" isRequired class="custom-input-style" />
+    </div>
 
-      <template v-slot:first-custom-error>
-        <div>Custom error for first input</div>
-      </template>
+    <div class="block">
+      <div>
+        <label>Phone number validation with no plus sign and only 8 digits</label>
+      </div>
+      <KriterionInput placeholder="PhoneNumber" validationType="phone" :hasPlusSign="false" :digits="8" isRequired
+        class="custom-input-style" />
+    </div>
 
-    </KriterionPassword>
+
+    <div class="block">
+      <KriterionPassword class="custom-input-style" errorClass="error" :hasNumerical="true" :hasLowerCase="true"
+        :hasUpperCase="true" :hasSpecialChar="false" :minLength="10"
+        :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }">
+
+        <template v-slot:first-custom-error>
+          <div>Custom error for first input</div>
+        </template>
+
+      </KriterionPassword>
+    </div>
   </KriterionValidator>
 </template>
 
 <style>
+body {
+  background-color: rgb(243, 242, 239);
+}
+
+.block {
+  margin-top: 20px;
+}
+
+.block div {
+  margin-bottom: 10px;
+}
+
 .custom-input-style {
   border: solid 1px rgba(0, 0, 0, 0.1);
   padding: 10px;
   border-radius: 5px;
 }
 
-/* .custom-input-style:not(:first-child) {
+.custom-input-style:not(:first-of-type) {
   margin-left: 10px;
-} */
+}
 
 .error {
   color: red;
   margin-top: 10px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Fira Code';
 }
 </style>
 
