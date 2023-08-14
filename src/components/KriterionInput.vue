@@ -61,7 +61,7 @@ const validatePhoneNumber = (fieldLabel) => {
 }
 
 const validateEmail = (fieldLabel) => {
-  const checkResult = isEmailValid({ email: inputValue.value, field: fieldLabel })
+  const checkResult = isEmailValid({ email: inputValue.value, required: props.isRequired, field: fieldLabel })
   returnCheckResponse(checkResult)
 }
 

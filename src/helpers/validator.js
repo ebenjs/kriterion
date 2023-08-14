@@ -1,4 +1,5 @@
 import * as regex from './regex.js';
+import { $pluginOptions } from '@/helpers/options.js';
 
 // Global
 export const isFilled = (value, field) => {
@@ -18,47 +19,30 @@ export const isFilled = (value, field) => {
 // Numerical
 export const validateNumber = ({ number, type = 'int', min = Number.NEGATIVE_INFINITY, max, hasNegativeValues = true, required = true, field }) => {
 
+    const requiredCheckResult = checkIsFilled(number, field);
+
     if (required) {
-        if (!isFilled(number, field).isValid) {
-            return isFilled(number, field);
+        if (!requiredCheckResult.isValid) {
+            return requiredCheckResult
         }
     }
 
-    if (isFilled(number).isValid) {
-        if (isNaN(number) || isFilled(number).isValid === false) {
-            return {
-                isValid: false,
-                message: 'Please enter a valid number for field ' + field,
-            };
+    if (requiredCheckResult.isValid) {
+
+        if (!checkForValidNumber(number, field).isValid) {
+            return checkForValidNumber(number, field);
         }
 
-        if (!hasNegativeValues && number < 0) {
-            return {
-                isValid: false,
-                message: 'Please enter a positive number for field ' + field,
-            };
+        if (!checkForNegativeValues(number, hasNegativeValues, field).isValid) {
+            return checkForNegativeValues(number, hasNegativeValues, field)
         }
 
-        if (type === 'int') {
-            if (!regex.intRegex.test(number)) {
-                return {
-                    isValid: false,
-                    message: 'Please enter an integer for field ' + field,
-                };
-            }
+        if (!checkForProperNumberType(number, type, field).isValid) {
+            return checkForProperNumberType(number, type, field)
+        }
 
-        } else if (type === 'float') {
-            if (!regex.floatRegex.test(number)) {
-                return {
-                    isValid: false,
-                    message: 'Please enter a float for field ' + field,
-                };
-            }
-        } else {
-            return {
-                isValid: false,
-                message: 'Unknown type for field ' + field,
-            };
+        if (!checkForProperNumberType(number, type, field).isValid) {
+            return checkForProperNumberType(number, type, field)
         }
 
         const floatNumber = parseFloat(number);
@@ -86,38 +70,18 @@ export const validateNumber = ({ number, type = 'int', min = Number.NEGATIVE_INF
 
 // Alphabetical
 export const validateAlphabet = ({ value, minLength = 1, maxLength, required = true, hasSpace = false, hasNumerical = false, field }) => {
+    const requiredCheckResult = checkIsFilled(value, field);
 
     if (required) {
-        if (!isFilled(value, field).isValid) {
-            return isFilled(value, field);
+        if (!requiredCheckResult.isValid) {
+            return requiredCheckResult
         }
     }
 
-    if (isFilled(value, field).isValid) {
-        if (hasSpace) {
-            if (!hasNumerical && !regex.alphaWIthSpaceRegex.test(value)) {
-                return {
-                    isValid: false,
-                    message: 'Only letters and spaces are allowed for field ' + field,
-                };
-            } else if (hasNumerical && !regex.alphaNumWithSpaceRegex.test(value)) {
-                return {
-                    isValid: false,
-                    message: 'Only letters, numbers and spaces are allowed for field ' + field,
-                };
-            }
-        } else {
-            if (!hasNumerical && !regex.alphabetRegex.test(value)) {
-                return {
-                    isValid: false,
-                    message: 'Please enter only letters for field ' + field,
-                };
-            } else if (hasNumerical && !regex.alphaNumRegex.test(value)) {
-                return {
-                    isValid: false,
-                    message: 'Please enter only letters and numbers for field ' + field,
-                };
-            }
+    if (requiredCheckResult.isValid) {
+
+        if (!checkForValidLetterNumberAndSpace(value, hasSpace, hasNumerical, field).isValid) {
+            return checkForValidLetterNumberAndSpace(value, hasSpace, hasNumerical, field);
         }
 
         if (typeof minLength === 'number' && value.length < minLength) {
@@ -144,36 +108,44 @@ export const validateAlphabet = ({ value, minLength = 1, maxLength, required = t
 // Phone number
 export const validatePhoneNumber = ({ phoneNumber, digitsNumber = 8, hasPlusSign = true, required = true, field }) => {
 
-    const checkResult = validateNumber({
+    const requiredCheckResult = checkIsFilled(phoneNumber, field);
+
+    const checkForValidNumberResult = validateNumber({
         number: phoneNumber,
         required: required,
         type: 'int',
         hasNegativeValues: false,
         field: field
     });
-    if (!checkResult.isValid) {
-        return checkResult;
+
+    if (required) {
+        if (!checkForValidNumberResult.isValid) {
+            return checkForValidNumberResult;
+        }
     }
 
-    if (hasPlusSign && !regex.phoneWithPlusSignRegex.test(phoneNumber)) {
-        return {
-            isValid: false,
-            message: 'Please enter a valid phone number with a + sign',
-        };
-    }
+    if (requiredCheckResult.isValid) {
+        if (hasPlusSign && !regex.phoneWithPlusSignRegex.test(phoneNumber)) {
+            return {
+                isValid: false,
+                message: 'Please enter a valid phone number with a + sign',
+            };
+        }
 
-    if (!hasPlusSign && regex.phoneWithPlusSignRegex.test(phoneNumber)) {
-        return {
-            isValid: false,
-            message: 'Please enter a valid phone number without a + sign',
-        };
-    }
+        if (!hasPlusSign && regex.phoneWithPlusSignRegex.test(phoneNumber)) {
+            return {
+                isValid: false,
+                message: 'Please enter a valid phone number without a + sign',
+            };
+        }
 
-    if (phoneNumber.length !== digitsNumber) {
-        return {
-            isValid: false,
-            message: `Phone number must be ${digitsNumber} digits`,
-        };
+        if (phoneNumber.length !== digitsNumber) {
+            return {
+                isValid: false,
+                message: `Phone number must be ${digitsNumber} digits`,
+            };
+        }
+
     }
 
     return {
@@ -184,13 +156,15 @@ export const validatePhoneNumber = ({ phoneNumber, digitsNumber = 8, hasPlusSign
 
 // Email validation
 export const isEmailValid = ({ email, required = true, field }) => {
+    const requiredCheckResult = checkIsFilled(email, field);
+
     if (required) {
-        if (!isFilled(email, field).isValid) {
-            return isFilled(email, field);
+        if (!requiredCheckResult.isValid) {
+            return requiredCheckResult
         }
     }
 
-    if (isFilled(email, field).isValid) {
+    if(requiredCheckResult.isValid){
         if (!regex.emailRegex.test(email)) {
             return {
                 isValid: false,
@@ -227,12 +201,14 @@ export const isPasswordValid = ({
     hasUpperCase = true,
     hasNumber = true,
     hasSpecialChar = true,
-    minLength = 8,
+    minLength = $pluginOptions.minPasswordLength,
     field
 }) => {
 
-    if (!isFilled(password, field).isValid) {
-        return isFilled(password, field);
+    const requiredCheckResult = checkIsFilled(password, field);
+
+    if (!requiredCheckResult.isValid) {
+        return requiredCheckResult
     }
 
     if (password.length < minLength) {
@@ -277,3 +253,86 @@ export const isPasswordValid = ({
 };
 
 
+// Internal functions to reduce cognitive complexity on some validation functions
+
+const checkIsFilled = (value, field) => {
+    return isFilled(value, field);
+}
+
+const checkForValidNumber = (number, field) => {
+    if (isNaN(number) || checkIsFilled(number, field).isValid === false) {
+        return {
+            isValid: false,
+            message: 'Please enter a valid number for field ' + field,
+        };
+    }
+
+    return { isValid: true, message: '' };
+}
+
+const checkForNegativeValues = (number, hasNegativeValues, field) => {
+    if (!hasNegativeValues && number < 0) {
+        return {
+            isValid: false,
+            message: 'Please enter a positive number for field ' + field,
+        };
+    }
+
+    return { isValid: true, message: '' };
+}
+
+const checkForProperNumberType = (number, type, field) => {
+    if (type === 'int') {
+        if (!regex.intRegex.test(number)) {
+            return {
+                isValid: false,
+                message: 'Please enter an integer for field ' + field,
+            };
+        }
+
+    } else if (type === 'float') {
+        if (!regex.floatRegex.test(number)) {
+            return {
+                isValid: false,
+                message: 'Please enter a float for field ' + field,
+            };
+        }
+    } else {
+        return {
+            isValid: false,
+            message: 'Unknown type for field ' + field,
+        };
+    }
+
+    return { isValid: true, message: '' };
+}
+
+const checkForValidLetterNumberAndSpace = (value, hasSpace, hasNumerical, field) => {
+    if (hasSpace) {
+        if (!hasNumerical && !regex.alphaWIthSpaceRegex.test(value)) {
+            return {
+                isValid: false,
+                message: 'Only letters and spaces are allowed for field ' + field,
+            };
+        } else if (hasNumerical && !regex.alphaNumWithSpaceRegex.test(value)) {
+            return {
+                isValid: false,
+                message: 'Only letters, numbers and spaces are allowed for field ' + field,
+            };
+        }
+    } else {
+        if (!hasNumerical && !regex.alphabetRegex.test(value)) {
+            return {
+                isValid: false,
+                message: 'Please enter only letters for field ' + field,
+            };
+        } else if (hasNumerical && !regex.alphaNumRegex.test(value)) {
+            return {
+                isValid: false,
+                message: 'Please enter only letters and numbers for field ' + field,
+            };
+        }
+    }
+
+    return { isValid: true, message: '' };
+}
