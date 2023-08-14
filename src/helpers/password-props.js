@@ -1,6 +1,12 @@
+import { $pluginOptions } from '@/helpers/options.js';
+
 export const passwordProps = {
     placeholder: {
         type: Object,
+        default: {
+            first: '',
+            second: ''
+        }
     },
     hasNumerical: {
         type: Boolean,
@@ -20,7 +26,7 @@ export const passwordProps = {
     },
     minLength: {
         type: Number,
-        default: 8
+        default: $pluginOptions.minPasswordLength
     },
     style: {
         type: String,

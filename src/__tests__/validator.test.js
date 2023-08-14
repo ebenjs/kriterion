@@ -446,7 +446,7 @@ describe('validatePhoneNumber function', () => {
 
     test('if it throws error when wrong characters are provided', () => {
         const options = {
-            phoneNumber: '90032163hel',
+            phoneNumber: '90032163helo',
             digitsNumber: 12,
             hasPlusSign: false,
             required: true,
