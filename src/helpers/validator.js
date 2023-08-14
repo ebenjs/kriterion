@@ -1,5 +1,5 @@
 import * as regex from './regex.js';
-import { $pluginOptions } from '@/helpers/options.js';
+import { defaultOptions, $pluginOptions } from '@/helpers/options.js';
 
 // Global
 export const isFilled = (value, field) => {
@@ -201,7 +201,7 @@ export const isPasswordValid = ({
     hasUpperCase = true,
     hasNumber = true,
     hasSpecialChar = true,
-    minLength = $pluginOptions.minPasswordLength,
+    minLength = $pluginOptions.minPasswordLength ?? defaultOptions.minPasswordLength,
     field
 }) => {
 
@@ -210,6 +210,9 @@ export const isPasswordValid = ({
     if (!requiredCheckResult.isValid) {
         return requiredCheckResult
     }
+
+    console.log('pluginOptions', $pluginOptions);
+    console.log('minLength', minLength);
 
     if (password.length < minLength) {
         return {
