@@ -2,6 +2,9 @@
 
 # Kriterion
 
+> Please note that this library is still under development. Some features may present bugs. If you encounter a bug, you can create an issue on [Github](https://github.com/ebenjs/kriterion)   or let us know on our [Slack](https://join.slack.com/t/kriterionhq/shared_invite/zt-212b55jvn-9Rlb~1XJsn3z~4kRq4fwbA).
+>
+
 ---
 
 [![npm](https://img.shields.io/npm/v/kriterion.svg)](https://www.npmjs.com/package/@ebenjs/kriterion)
