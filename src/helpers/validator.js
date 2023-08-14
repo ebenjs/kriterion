@@ -1,4 +1,5 @@
 import * as regex from './regex.js';
+import { $pluginOptions } from '@/helpers/options.js';
 
 // Global
 export const isFilled = (value, field) => {
@@ -69,7 +70,6 @@ export const validateNumber = ({ number, type = 'int', min = Number.NEGATIVE_INF
 
 // Alphabetical
 export const validateAlphabet = ({ value, minLength = 1, maxLength, required = true, hasSpace = false, hasNumerical = false, field }) => {
-
     const requiredCheckResult = checkIsFilled(value, field);
 
     if (required) {
@@ -201,7 +201,7 @@ export const isPasswordValid = ({
     hasUpperCase = true,
     hasNumber = true,
     hasSpecialChar = true,
-    minLength = 8,
+    minLength = $pluginOptions.minPasswordLength,
     field
 }) => {
 
