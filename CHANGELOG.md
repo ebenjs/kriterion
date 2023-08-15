@@ -1,5 +1,8 @@
 # Changelog
 
+#### 0.1.9 (2023-08-15)
+- Fixed v-model bugs
+
 #### 0.1.8 (2023-08-14)
 - Extracted default password length to be plugin options
 - Fixed bugs

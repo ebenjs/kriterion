@@ -1,4 +1,8 @@
 export const kriterionProps = {
+    modelValue: {
+        type: String,
+        default: ''
+    },
     validationType: {
         type: String,
         default: 'required',
