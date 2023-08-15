@@ -1,6 +1,10 @@
 import { $pluginOptions } from '@/helpers/options.js';
 
 export const passwordProps = {
+    modelValue: {
+        type: String,
+        default: ''
+    },
     placeholder: {
         type: Object,
         default: {

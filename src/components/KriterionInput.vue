@@ -15,14 +15,13 @@ import { kriterionProps } from "@/helpers/props.js";
 import { uniqIdentifier } from "@/helpers/utility.js";
 
 const props = defineProps(kriterionProps)
-const emit = defineEmits(['error'])
+const emit = defineEmits(['error', 'update:modelValue'])
 
 const kid = ref(uniqIdentifier())
-const inputValue = ref('')
 
 const validateNumber = (fieldLabel) => {
   const checkResult = numberValidator({
-    number: inputValue.value,
+    number: props.modelValue,
     type: props.numberType,
     min: props.min,
     max: props.max,
@@ -36,7 +35,7 @@ const validateNumber = (fieldLabel) => {
 
 const validateAlphaNum = ({ numerical = true, field }) => {
   const checkResult = alphabetValidator({
-    value: inputValue.value,
+    value: props.modelValue,
     minLength: props.minLength,
     maxLength: props.maxLength,
     required: props.isRequired,
@@ -50,7 +49,7 @@ const validateAlphaNum = ({ numerical = true, field }) => {
 
 const validatePhoneNumber = (fieldLabel) => {
   const checkResult = phoneNumberValidator({
-    phoneNumber: inputValue.value,
+    phoneNumber: props.modelValue,
     hasPlusSign: props.hasPlusSign,
     digitsNumber: props.digits,
     required: props.isRequired,
@@ -61,20 +60,20 @@ const validatePhoneNumber = (fieldLabel) => {
 }
 
 const validateEmail = (fieldLabel) => {
-  const checkResult = isEmailValid({ email: inputValue.value, required: props.isRequired, field: fieldLabel })
+  const checkResult = isEmailValid({ email: props.modelValue, required: props.isRequired, field: fieldLabel })
   returnCheckResponse(checkResult)
 }
 
 const validatePassword = (identifier, fieldLabel) => {
 
   if (identifier === 'password.first') {
-    passwordValues.first = inputValue.value
+    passwordValues.first = props.modelValue
   } else {
-    passwordValues.second = inputValue.value
+    passwordValues.second = props.modelValue
   }
 
   const checkPasswordValidityResult = isPasswordValid({
-    password: inputValue.value,
+    password: props.modelValue,
     hasLowerCase: props.hasLowerCase,
     hasUpperCase: props.hasUpperCase,
     hasNumber: props.hasNumber,
@@ -92,7 +91,7 @@ const validatePassword = (identifier, fieldLabel) => {
 }
 
 const validateRequired = () => {
-  const checkResult = isFilled(inputValue.value, currentFieldLabel.value)
+  const checkResult = isFilled(props.modelValue, currentFieldLabel.value)
   returnCheckResponse(checkResult)
 }
 
@@ -183,8 +182,10 @@ onMounted(() => {
 
 <template>
   <input :id="props.id" :kid="props.kid ?? kid" type="text" :title="props.hasTitle ? currentFieldLabel : null"
-    v-model="inputValue" :placeholder="props.placeholder" :readonly="props.readonly" :disabled="props.disabled"
+    :placeholder="props.placeholder" :readonly="props.readonly" :disabled="props.disabled"
     :autofocus="props.autofocus" :autocomplete="props.autocomplete" :style="props.style" :class="props.class"
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
     @blur="validate()" />
 
   <slot v-if="errors.has(props.kid ?? kid)">

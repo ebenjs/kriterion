@@ -2,6 +2,10 @@
 import KriterionInput from "@/components/KriterionInput.vue";
 import KriterionPassword from "@/components/KriterionPassword.vue";
 import KriterionValidator from "@/components/KriterionValidator.vue";
+import { ref } from "vue";
+
+const inputValue = ref('');
+const passwordValue = ref('');
 
 const captureError = (error) => {
   console.log('error captured', error);
@@ -21,7 +25,9 @@ const showError = (error) => {
       <div>
         <label>Alphabetical validation with minLength and maxLength and space authorized properties</label>
       </div>
-      <KriterionInput placeholder="Alphabetic Values" validationType="alpha" :hasSpace="true" :minLength="1"
+      <KriterionInput
+      v-model="inputValue"
+      placeholder="Alphabetic Values" validationType="alpha" :hasSpace="true" :minLength="1"
         :maxLength="5" :isRequired="false" class="custom-input-style" />
     </div>
 
@@ -86,9 +92,11 @@ const showError = (error) => {
 
     <!-- Slots have priority over errorClass and errorStyle properties. -->
     <div class="block">
+      
       <KriterionPassword class="custom-input-style" errorClass="error" :hasNumerical="true" :hasLowerCase="true"
         :hasUpperCase="true" :hasSpecialChar="false" :minLength="10"
-        :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }">
+        :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }"
+        v-model="passwordValue">
 
         <template v-slot:first-custom-error>
           <div>Custom error for first input</div>
