@@ -18,10 +18,11 @@ const props = defineProps(kriterionProps)
 const emit = defineEmits(['error', 'update:modelValue'])
 
 const kid = ref(uniqIdentifier())
+const defaultModelValue = ref('')
 
 const validateNumber = (fieldLabel) => {
   const checkResult = numberValidator({
-    number: props.modelValue,
+    number: modelValue.value,
     type: props.numberType,
     min: props.min,
     max: props.max,
@@ -35,7 +36,7 @@ const validateNumber = (fieldLabel) => {
 
 const validateAlphaNum = ({ numerical = true, field }) => {
   const checkResult = alphabetValidator({
-    value: props.modelValue,
+    value: modelValue.value,
     minLength: props.minLength,
     maxLength: props.maxLength,
     required: props.isRequired,
@@ -49,7 +50,7 @@ const validateAlphaNum = ({ numerical = true, field }) => {
 
 const validatePhoneNumber = (fieldLabel) => {
   const checkResult = phoneNumberValidator({
-    phoneNumber: props.modelValue,
+    phoneNumber: modelValue.value,
     hasPlusSign: props.hasPlusSign,
     digitsNumber: props.digits,
     required: props.isRequired,
@@ -60,20 +61,20 @@ const validatePhoneNumber = (fieldLabel) => {
 }
 
 const validateEmail = (fieldLabel) => {
-  const checkResult = isEmailValid({ email: props.modelValue, required: props.isRequired, field: fieldLabel })
+  const checkResult = isEmailValid({ email: modelValue.value, required: props.isRequired, field: fieldLabel })
   returnCheckResponse(checkResult)
 }
 
 const validatePassword = (identifier, fieldLabel) => {
 
   if (identifier === 'password.first') {
-    passwordValues.first = props.modelValue
+    passwordValues.first = modelValue.value
   } else {
-    passwordValues.second = props.modelValue
+    passwordValues.second = modelValue.value
   }
 
   const checkPasswordValidityResult = isPasswordValid({
-    password: props.modelValue,
+    password: modelValue.value,
     hasLowerCase: props.hasLowerCase,
     hasUpperCase: props.hasUpperCase,
     hasNumber: props.hasNumber,
@@ -91,7 +92,7 @@ const validatePassword = (identifier, fieldLabel) => {
 }
 
 const validateRequired = () => {
-  const checkResult = isFilled(props.modelValue, currentFieldLabel.value)
+  const checkResult = isFilled(modelValue.value, currentFieldLabel.value)
   returnCheckResponse(checkResult)
 }
 
@@ -107,6 +108,14 @@ const returnCheckResponse = (checkResult) => {
 const currentFieldLabel = computed(() => {
   return props.label ?? props.kid ?? kid.value
 })
+
+const modelValue = computed({
+  get: () => (props.modelValue || defaultModelValue.value),
+  set: (newValue) => {
+    emit('update:value', newValue);
+    defaultModelValue.value = newValue;
+  }
+});
 
 const validate = () => {
 
@@ -178,19 +187,24 @@ onMounted(() => {
   checkForPhoneTypeProperties()
 })
 
+const update = (data) => {
+  emit('update:modelValue', data)
+  defaultModelValue.value = data
+}
+
 </script>
 
 <template>
   <textarea v-if="props.renderType === 'textarea'" :id="props.id" :kid="props.kid ?? kid" type="text"
     :title="props.hasTitle ? currentFieldLabel : null" :placeholder="props.placeholder" :readonly="props.readonly"
     :disabled="props.disabled" :autofocus="props.autofocus" :autocomplete="props.autocomplete" :style="props.style"
-    :class="props.class" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" @blur="validate()">
+    :class="props.class" :value="modelValue" @input="update($event.target.value)" @blur="validate()">
   </textarea>
 
   <input v-else :id="props.id" :kid="props.kid ?? kid" type="text" :title="props.hasTitle ? currentFieldLabel : null"
     :placeholder="props.placeholder" :readonly="props.readonly" :disabled="props.disabled" :autofocus="props.autofocus"
     :autocomplete="props.autocomplete" :style="props.style" :class="props.class" :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)" @blur="validate()" />
+    @input="update($event.target.value)" @blur="validate()" />
 
   <slot v-if="errors.has(props.kid ?? kid)">
     <div :class="props.errorClass" :style="props.errorStyle">
