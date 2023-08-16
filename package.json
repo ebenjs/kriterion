@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/ebenjs/kriterion/issues"
   },
-  "version": "0.1.9",
+  "version": "0.1.10",
   "type": "module",
   "files": [
     "dist"

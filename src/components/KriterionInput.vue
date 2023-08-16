@@ -181,12 +181,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <input :id="props.id" :kid="props.kid ?? kid" type="text" :title="props.hasTitle ? currentFieldLabel : null"
-    :placeholder="props.placeholder" :readonly="props.readonly" :disabled="props.disabled"
-    :autofocus="props.autofocus" :autocomplete="props.autocomplete" :style="props.style" :class="props.class"
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-    @blur="validate()" />
+  <textarea v-if="props.renderType === 'textarea'" :id="props.id" :kid="props.kid ?? kid" type="text"
+    :title="props.hasTitle ? currentFieldLabel : null" :placeholder="props.placeholder" :readonly="props.readonly"
+    :disabled="props.disabled" :autofocus="props.autofocus" :autocomplete="props.autocomplete" :style="props.style"
+    :class="props.class" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" @blur="validate()">
+  </textarea>
+
+  <input v-else :id="props.id" :kid="props.kid ?? kid" type="text" :title="props.hasTitle ? currentFieldLabel : null"
+    :placeholder="props.placeholder" :readonly="props.readonly" :disabled="props.disabled" :autofocus="props.autofocus"
+    :autocomplete="props.autocomplete" :style="props.style" :class="props.class" :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)" @blur="validate()" />
 
   <slot v-if="errors.has(props.kid ?? kid)">
     <div :class="props.errorClass" :style="props.errorStyle">

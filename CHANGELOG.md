@@ -1,5 +1,8 @@
 # Changelog
 
+#### 0.1.10 (2023-08-16)
+- Added textarea support
+
 #### 0.1.9 (2023-08-15)
 - Fixed v-model bugs
 
