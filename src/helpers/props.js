@@ -10,6 +10,13 @@ export const kriterionProps = {
             return ['required', 'alpha', 'alphanum', 'number', 'email', 'phone', 'password'].includes(value)
         }
     },
+    renderType: {
+        type: String,
+        default: 'input',
+        validator(value) {
+            return ['input', 'textarea'].includes(value)
+        }
+    },
     // Global
     isRequired: {
         type: Boolean,

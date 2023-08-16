@@ -25,10 +25,9 @@ const showError = (error) => {
       <div>
         <label>Alphabetical validation with minLength and maxLength and space authorized properties</label>
       </div>
-      <KriterionInput
-      v-model="inputValue"
-      placeholder="Alphabetic Values" validationType="alpha" :hasSpace="true" :minLength="1"
-        :maxLength="5" :isRequired="false" class="custom-input-style" />
+      <KriterionInput v-model="inputValue" renderType="textarea" placeholder="Alphabetic Values" validationType="alpha"
+        :hasSpace="true" :minLength="1" :maxLength="5" :isRequired="false" class="custom-input-style">
+      </KriterionInput>
     </div>
 
     <div class="block">
@@ -92,11 +91,10 @@ const showError = (error) => {
 
     <!-- Slots have priority over errorClass and errorStyle properties. -->
     <div class="block">
-      
+
       <KriterionPassword class="custom-input-style" errorClass="error" :hasNumerical="true" :hasLowerCase="true"
         :hasUpperCase="true" :hasSpecialChar="false" :minLength="10"
-        :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }"
-        v-model="passwordValue">
+        :placeholder="{ first: 'First Placeholder', second: 'Second Placeholder' }" v-model="passwordValue">
 
         <template v-slot:first-custom-error>
           <div>Custom error for first input</div>
