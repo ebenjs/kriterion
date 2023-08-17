@@ -5,6 +5,8 @@
 > Please note that this library is still under development. Some features may present bugs. If you encounter a bug, you can create an issue on [Github](https://github.com/ebenjs/kriterion)   or let us know on our [Slack](https://join.slack.com/t/kriterionhq/shared_invite/zt-212b55jvn-9Rlb~1XJsn3z~4kRq4fwbA).
 >
 
+<a href="https://www.buymeacoffee.com/ebenjs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ---
 
 [![npm](https://img.shields.io/npm/v/kriterion.svg)](https://www.npmjs.com/package/@ebenjs/kriterion)
@@ -71,6 +73,23 @@ Now you can use Kriterion in your Vue.js components:
   </div>
 </template>
 ```
+
+When registering the plugin in your project, you can pass some options to it.One of these options is the default password length. Here's how you can pass this option to the plugin.
+
+```javascript
+app.use(Kriterion, {
+    minPasswordLength: 24,
+});
+```
+
+Here is the full list of options you can pass to the plugin:
+
+```javascript
+const options = {
+    minPasswordLength: 24,
+});
+```
+
 ## Getting started
 
 ### Components
@@ -322,3 +341,104 @@ However, two slots are available: `first-custom-error` and `second-custom-error`
 >
 
 ### Capturing errors events
+
+There are different ways of capturing and displaying errors in kriterion. Let's go through them one by one
+
+#### The k-validator component
+
+When you use the `k-validator` component as a wrapper for your child components (`k-input` and `k-password`), you can activate the display of aggregated error messages using the `activateErrors` prop.
+
+When this prop is set to true, all your error messages will be displayed at the top of your form with a default style that you can of course customise.
+
+Here is the default style for error messages from the `k-validator` component:
+
+<img src="./public/assets/screenshot-customization-5.png" />
+
+You can change the style of the error by specifying the `errorStyle` and/or `errorClass` props.
+
+You can also replace error rendering altogether by specifying the `errors` slot like this:
+
+```html
+<template v-slot:errors>
+      Some errors : {{ errors }}
+</template>
+```
+In this case, you'll probably prefer to capture the error messages in a variable and display them yourself. You can listen to the component's `@error` event and capture any errors.
+
+```javascript
+
+<script setup>
+import { ref } from 'vue'
+
+const errors = ref({})  
+
+const captureError = (error) => {
+  errors.value = error
+}
+</script>
+
+<k-validator
+  :activate-errors="false"
+  @error="captureError">
+    
+    <template v-slot:errors>
+      {{ errors }}
+    </template>
+
+</k-validator>
+```
+
+#### The easiest way
+
+Note that kriterion also exports an `errors` variable directly from the library which you can import and just display. This is the easiest way to work with aggregated error messages.
+
+This errors variable is a reactive state so every time the errors change, this variable is automatically updated.
+
+Let's take a quick look at how it works
+
+```javascript
+import { errors } from "@ebenjs/kriterion";
+
+<template> 
+  <div>
+    Building validation form with kriterion
+  </div>
+ 
+  <!-- We can just display the imported variable -->
+  <div>
+    Errors : {{ errors }}
+  </div>
+
+</template>
+```
+
+It's important to note that the `errors` variable we import is a `Map` that we can manipulate as we wish. If we try to display the `errors` variable in raw, this is what it might look like:
+
+<img src="./public/assets/screenshot-customization-6.png" />
+
+#### The k-input component
+
+Finally, we can also capture errors on individual `k-input` components. The use cases are certainly fewer, but it's perfectly possible. As with `k-validator`, we can listen for the `@error` event and capture it.
+
+```javascript
+
+<script setup>
+
+const showError = (error) => {
+  /* Do whatever you want with the captured error */
+  console.log('Error for single input', error);
+}
+
+</script>
+
+<k-validator :activate-errors="false">
+
+  <label>Email validation with default values</label>
+    
+  <k-input
+    @error="showError"
+    validationType="email">
+  </k-input>
+
+</k-validator>
+```
