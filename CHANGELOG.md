@@ -1,5 +1,9 @@
 # Changelog
 
+#### 0.1.11 (2023-08-17)
+- Fixed validation bug when v-model not provided
+- Exported errors for easy access
+
 #### 0.1.10 (2023-08-16)
 - Added textarea support
 
