@@ -17,9 +17,7 @@ const updatePasswordVmodel = (newValue) => {
 </script>
 
 <template>
-    <div>
-        <!-- Repeated type or not -->
-        <!-- One object props instead of multiple hasproperties -->
+    <div class="password-wrapper">
 
         <KriterionInput validationType="password" :minLength="props.minLength" :hasLowerCase="props.hasLowerCase"
             :hasUpperCase="props.hasUpperCase" :hasNumber="props.hasNumber" :hasSpecialChar="props.hasSpecialChar"
@@ -34,12 +32,11 @@ const updatePasswordVmodel = (newValue) => {
 
         <slot name="between-content"></slot>
 
-        <KriterionInput validationType="password" :hasLowerCase="props.hasLowerCase" :hasUpperCase="props.hasUpperCase"
+        <KriterionInput v-if="props.repeated" validationType="password" :hasLowerCase="props.hasLowerCase" :hasUpperCase="props.hasUpperCase"
             :hasNumber="props.hasNumber" :hasSpecialChar="props.hasSpecialChar" :placeholder="props.placeholder.second"
             :style="props.style" :class="props.class" :errorStyle="props.errorStyle" :errorClass="props.errorClass"
             :identifier="'password.second'" :kid="uniqIdentifier()">
 
-            <!--            Activate errors or not-->
             <slot name="second-custom-error"></slot>
 
         </KriterionInput>
@@ -47,3 +44,10 @@ const updatePasswordVmodel = (newValue) => {
         <slot name="after-content"></slot>
     </div>
 </template>
+
+<style scoped>
+.password-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+</style>

@@ -1,5 +1,11 @@
 # Changelog
 
+#### 0.1.12 (2023-08-17)
+- Obfuscate password text
+- Allow repeated password type or not
+- Changed v-model behaviour to lazy
+
+
 #### 0.1.11 (2023-08-17)
 - Fixed validation bug when v-model not provided
 - Exported errors for easy access

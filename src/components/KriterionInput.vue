@@ -109,6 +109,10 @@ const currentFieldLabel = computed(() => {
   return props.label ?? props.kid ?? kid.value
 })
 
+const renderInputType = computed(() => {
+  return props.validationType === 'password' ? 'password' : 'text'
+})
+
 const modelValue = computed({
   get: () => (props.modelValue || defaultModelValue.value),
   set: (newValue) => {
@@ -198,13 +202,13 @@ const update = (data) => {
   <textarea v-if="props.renderType === 'textarea'" :id="props.id" :kid="props.kid ?? kid" type="text"
     :title="props.hasTitle ? currentFieldLabel : null" :placeholder="props.placeholder" :readonly="props.readonly"
     :disabled="props.disabled" :autofocus="props.autofocus" :autocomplete="props.autocomplete" :style="props.style"
-    :class="props.class" :value="modelValue" @input="update($event.target.value)" @blur="validate()">
+    :class="props.class" :value="modelValue" @change="update($event.target.value)" @blur="validate()">
   </textarea>
 
-  <input v-else :id="props.id" :kid="props.kid ?? kid" type="text" :title="props.hasTitle ? currentFieldLabel : null"
-    :placeholder="props.placeholder" :readonly="props.readonly" :disabled="props.disabled" :autofocus="props.autofocus"
-    :autocomplete="props.autocomplete" :style="props.style" :class="props.class" :value="modelValue"
-    @input="update($event.target.value)" @blur="validate()" />
+  <input v-else :type="renderInputType" :id="props.id" :kid="props.kid ?? kid"
+    :title="props.hasTitle ? currentFieldLabel : null" :placeholder="props.placeholder" :readonly="props.readonly"
+    :disabled="props.disabled" :autofocus="props.autofocus" :autocomplete="props.autocomplete" :style="props.style"
+    :class="props.class" :value="modelValue" @change="update($event.target.value)" @blur="validate()" />
 
   <slot v-if="errors.has(props.kid ?? kid)">
     <div :class="props.errorClass" :style="props.errorStyle">
