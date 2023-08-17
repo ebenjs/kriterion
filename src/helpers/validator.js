@@ -98,7 +98,6 @@ export const validateAlphabet = ({ value, minLength = 1, maxLength, required = t
             };
         }
     }
-
     return {
         isValid: true,
         message: '',
@@ -210,9 +209,6 @@ export const isPasswordValid = ({
     if (!requiredCheckResult.isValid) {
         return requiredCheckResult
     }
-
-    console.log('pluginOptions', $pluginOptions);
-    console.log('minLength', minLength);
 
     if (password.length < minLength) {
         return {
