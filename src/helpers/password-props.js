@@ -5,6 +5,10 @@ export const passwordProps = {
         type: String,
         default: ''
     },
+    repeated: {
+        type: Boolean,
+        default: true
+    },
     placeholder: {
         type: Object,
         default: {

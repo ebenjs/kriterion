@@ -32,9 +32,7 @@ watch(errors.value, async (newError) => {
 <template>
     <div>
         <slot name="errors">
-            <div v-if="props.activateErrors && errors.size > 0"
-                 :class="errorClass"
-                 :style="errorStyle">
+            <div v-if="props.activateErrors && errors.size > 0" :class="errorClass" :style="errorStyle">
                 <ul>
                     <li v-for="error in errors" :key="error">
                         {{ error.at(1) }}
